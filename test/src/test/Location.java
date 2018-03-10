@@ -7,13 +7,18 @@ package test;
 public class Location {
 	private int xAxis;
 	private int yAxis;
+	
 	private boolean hasPlayer;
 	private boolean hasWall;
+	private boolean hasMonster;
+	
 	Location()
 	{
 		this.setxAxis(-1);
 		this.setyAxis(-1);
 		this.setHasPlayer(false);
+		this.setHasWall(false);
+		this.setHasMonster(false);
 	}
 	
 	
@@ -61,6 +66,20 @@ public class Location {
 	public void setHasWall(boolean hasWall) {
 		this.hasWall = hasWall;
 	}
+	
+	
+
+
+
+	public boolean isHasMonster() {
+		return hasMonster;
+	}
+
+
+
+	public void setHasMonster(boolean hasMonster) {
+		this.hasMonster = hasMonster;
+	}
 
 
 
@@ -69,15 +88,18 @@ public class Location {
 			
 		if(this.hasPlayer)
 		{
-			return " ▲ ";
+			return "~▲~";
 		}
 		else if(this.hasWall)
 		{
 			return "▄▄▄";
 		}
+		else if(this.hasMonster)
+		{	
+			return "~Φ~";
+		}
 		else
 		{
-			//return String.format("%d,%d",this.getxAxis(),this.getyAxis());
 			return "~~~";
 		}
 	

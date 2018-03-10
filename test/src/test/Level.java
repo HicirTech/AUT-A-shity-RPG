@@ -2,13 +2,11 @@ package test;
 
 public class Level {	
 	private int level; 
-	
 	private Location inLevelLocation[][];
-	
+	private Player player;
 	
 	Level(int Level)
 	{
-		
 		this.setLevel(level);
 		this.inLevelLocation = new Location[8][8];
 		for(int yAxis=0;yAxis!=8;yAxis++)
@@ -17,10 +15,13 @@ public class Level {
 			{
 				this.getInLevelLocation()[xAxis][yAxis]=new Location(xAxis,yAxis);
 			}
-		}
-		
+		}		
 	}
 
+	public void setPlayer(Player player)
+	{
+		this.player=player;
+	}
 
 	public int getLevel() {
 		return level;
@@ -43,17 +44,44 @@ public class Level {
 	
 	public String toString()
 	{
-		String returning=String.format("This is level: %d\n",this.getLevel());
+		String returning= "¨X¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[\n";
+		
 		for(int yAxis=0;yAxis!=8;yAxis++)
 		{
 			for(int xAxis=0;xAxis!=8;xAxis++)
 			{
+				if(xAxis==0)
+				{
+					returning=returning+"¨U"+this.getInLevelLocation()[xAxis][yAxis].toString();
+				}
+				else if(xAxis==7)
+				{
+					returning=returning+this.getInLevelLocation()[xAxis][yAxis].toString()+"¨U";
+				}
+				else
+				
 				returning=returning+""+this.getInLevelLocation()[xAxis][yAxis].toString();
 			}
-			returning=returning+'\n';
+			if(yAxis==1)
+			{
+				returning = returning +"Player information:"+"		"+"Lables:";
+			}
+			else if(yAxis==2)
+			{
+				returning = returning +"heath: "+player.getHeath()+"			"+"¡ø:Player";
+			}
+			else if(yAxis==3)
+			{
+				returning = returning +"money: "+player.getMoney()+"			"+"¦µ:Monster";
+			}
+			else if(yAxis==4)
+			{
+				returning = returning +"Your location is: Level "+player.getCurrentLevel().getLevel()+"	"+"¨{:Walls";
+			}
+			returning = returning +"\n";	
 		}
 		
-		return returning;
+		return returning+"¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨a";
 	}
 	
 	
