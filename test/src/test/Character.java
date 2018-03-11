@@ -24,7 +24,8 @@ public abstract class Character {
 	public double getAttack() {
 		return attack;
 	}
-	public void setAttack(double attack) {
+	public void setAttack(double attack) 
+	{
 		this.attack = attack;
 	}
 	public int getMoney() {

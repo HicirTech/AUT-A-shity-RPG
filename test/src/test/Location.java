@@ -10,6 +10,7 @@ public class Location {
 	
 	private boolean hasPlayer;
 	private boolean hasWall;
+	private boolean hasSword;
 	private boolean hasMonster;
 	
 	Location()
@@ -82,6 +83,19 @@ public class Location {
 	}
 
 
+	
+	
+	public boolean isHasSword() {
+		return hasSword;
+	}
+
+
+
+	public void setHasSword(boolean hasSword) {
+		this.hasSword = hasSword;
+	}
+
+
 
 	public String toString()
 	{
@@ -97,6 +111,10 @@ public class Location {
 		else if(this.hasMonster)
 		{	
 			return "~Φ~";
+		}
+		else if(this.hasSword)
+		{
+			return "~S~";
 		}
 		else
 		{

@@ -1,14 +1,56 @@
 package test;
 
 public class Player extends Character {
+	private boolean hasSword;
+	private Sword currentSword;
+	private double attack;
 	Player(Level thisLevel)
 	{
 		super(thisLevel);
 		super.getCurrentLevel().getInLevelLocation()[0][0].setHasPlayer(true);
 		this.setCurrentX(0);
 		this.setCurrentY(0);
+		this.attack=5;
 	}
 	
+	
+	
+	public boolean isHasSword() {
+		return hasSword;
+	}
+
+
+	public double getAttack() {
+		return attack;
+	}
+
+	public void setAttackBoot() {
+		if(this.isHasSword())
+		{
+			this.attack = 5*this.getCurrentSword().getAtkBoot();
+		}
+		else
+		{
+			this.attack = 5;
+		}
+		
+	}
+
+	public void setHasSword(boolean hasSword) {
+		this.hasSword = hasSword;
+	}
+
+
+	public Sword getCurrentSword() {
+		return currentSword;
+	}
+
+
+	public void setCurrentSword(Sword currentSword) {
+		this.currentSword = currentSword;
+	}
+
+
 	public void move(char way)
 	{
 		try

@@ -78,6 +78,14 @@ public class Level {
 			{
 				returning = returning +"Your location is: Level "+player.getCurrentLevel().getLevel()+"	"+"¨{:Walls";
 			}
+			else if(yAxis==5&&this.player.isHasSword())
+			{
+				returning = returning +"You are using: "+player.getCurrentSword();
+			}
+			else if(yAxis==6)
+			{
+				returning = returning + "Your ATK is: "+this.player.getAttack();
+			}
 			returning = returning +"\n";	
 		}
 		

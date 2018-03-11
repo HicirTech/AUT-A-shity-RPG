@@ -10,7 +10,7 @@ public class MainClass {
 		Player player= new Player(a);
 		a.setPlayer(player);
 		Monster m = new Monster(a);
-		
+		Sword s = new Sword_Napoleon(a);
 		System.out.println("please make sure you can see 4 ¡ø, then enter [A] to start");
 		System.out.println("¡ø                                                                ¡ø");
 		System.out.println("\n\n\n\n\n\n");
@@ -28,10 +28,21 @@ public class MainClass {
 				player.move(new Scanner(System.in).next().charAt(0));
 				try
 				{
-					if(player.getCurrentX()==m.getCurrentX()&&player.getCurrentY()==m.getCurrentY())
+					//if(player.getCurrentX()==m.getCurrentX()&&player.getCurrentY()==m.getCurrentY())
+					if(player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasMonster())
 					{
 						m.Attack(player);
-						m=null;
+						m.setHeath(m.getHeath()-player.getAttack());
+						
+						if(m.getHeath()<=0)
+						{
+							m.die(player);
+							m=null;
+						}			
+					}
+					else if (player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasSword())
+					{
+						s.pickUp(player);
 					}
 				}
 				catch(NullPointerException e)
