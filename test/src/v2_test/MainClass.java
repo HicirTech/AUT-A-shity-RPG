@@ -1,27 +1,36 @@
-package test;
-import java.io.IOException;
+package v2_test;
 import java.util.*;
 
 public class MainClass {
 	public static void main(String args[])
 	{
 		Scanner scan = new Scanner(System.in);
-		Level a = new Level(1);
-		Player player= new Player(a);
+		/*Level a = new Level();
+		Player player= new Player();
 		a.setPlayer(player);
 		Monster m = new Monster(a);
-		Sword s = new Sword_Napoleon(a);
-		System.out.println("please make sure you can see 4 ¡ø, then enter [A] to start");
+		Sword s = new Sword_Napoleon(a);*/
+		System.out.println("please make sure you can see 4 ¡ø, then enter anykey to start");
 		System.out.println("¡ø                                                                ¡ø");
 		System.out.println("\n\n\n\n\n\n");
 		System.out.println("¡ø                                                                ¡ø");
-		if(scan.next().charAt(0)=='A')
+		 World theWorld = new World();
+		/*
+		do
 		{
-			for(int b = 0;b!=6;b++)
+			theWorld.getPlayer().move(new Scanner(System.in).next().charAt(0));
+			/*if(theWorld.getPlayer().getCurrentLevel().getInLevelLocation()[theWorld.getPlayer().getCurrentX()][theWorld.getPlayer().getCurrentY()].isHasUpStairs())
 			{
-				a.getInLevelLocation()[b][1].setHasWall(true);
+				theWorld.getInGameLevel()[theWorld.getPlayer().getCurrentLevel().getLevel()+1].setPlayer(theWorld.getPlayer());
+				theWorld.getPlayer().setCurrentLevel(theWorld.getInGameLevel()[theWorld.getPlayer().getCurrentLevel().getLevel()+1]);
+				
 			}
-			a.getInLevelLocation()[7][1].setHasWall(true);
+			System.out.println(theWorld.getPlayer().getCurrentLevel());
+		}while(true);
+		
+		/*	if(scan.next().charAt(0)=='A')
+		{
+		
 			do
 			{
 				System.out.println(a);
@@ -40,10 +49,7 @@ public class MainClass {
 							m=null;
 						}			
 					}
-					else if (player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasSword())
-					{
-						s.pickUp(player);
-					}
+					else 
 				}
 				catch(NullPointerException e)
 				{
@@ -51,5 +57,6 @@ public class MainClass {
 				}
 			}while(true);
 		}
+		*/
 }
 }
