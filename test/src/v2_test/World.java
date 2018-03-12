@@ -14,22 +14,17 @@ public class World {
 		do{
 			try{
 			player.move(new Scanner(System.in).next().charAt(0));
-			goUpChecker();
-			goDownChecker();
-			monsterEvent(0);
-			swordPickUpEevent();
+			checkList();
 			System.out.println(this.getPlayer().getCurrentLevel());
 			}
 			catch(NullPointerException e)
 			{
 				player.move(new Scanner(System.in).next().charAt(0));
-				goUpChecker();
-				goDownChecker();
-				monsterEvent(0);
-				swordPickUpEevent();
+				checkList();
 				System.out.println(this.getPlayer().getCurrentLevel());
 			}
-		}while(player.getHeath()!=0);
+		}while(player.getHeath()>0);
+		
 		
 	}
 	
@@ -63,7 +58,6 @@ public class World {
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
 			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1]);
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(true);
-			//levelManager();
 		}
 	}
 	public void goDownChecker()
@@ -74,7 +68,6 @@ public class World {
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
 			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()-1]);
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(true);
-		//	levelManager();
 		}
 	}
 	
@@ -116,6 +109,7 @@ public class World {
 		this.inGameLevel[0].getInLevelLocation()[5][5].setHasMonster(true);
 		s.setSword(8, 9);
 		m[0].setMonster(5,5);
+		m[0].setAttack(99);
 		}
 		level1:
 		{
@@ -127,6 +121,16 @@ public class World {
 		}
 		this.inGameLevel[1].getInLevelLocation()[8][1].setHasUpStairs(true);
 		this.inGameLevel[1].getInLevelLocation()[1][8].setHasDownStairs(true);
+	}
+	public void checkList()
+	{
+		goUpChecker();
+		goDownChecker();
+		for(int monsterNO=0;monsterNO!=m.length;monsterNO++)
+		{
+			monsterEvent(monsterNO);
+		}
+		swordPickUpEevent();
 	}
 	
 }
