@@ -3,6 +3,7 @@ import java.util.*;
 public class World {
 	private Player player;
 	private Monster m[];
+	private Trader t[];
 	private Level inGameLevel[];
 	private Sword s;
 	World()
@@ -35,7 +36,25 @@ public class World {
 			s.pickUp(player);
 		}
 	}
-	
+	public void meetTraderEvent(int traderNo)
+	{
+		if (player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasTreader())
+		{
+			System.out.println("Trader asking for 5 Golds for boot up you heath");
+			if(new Scanner(System.in).next().charAt(0)=='o')
+			{
+				t[traderNo].playerBuyHeath(player);
+				t[traderNo]=null;
+
+			}
+			else
+			{
+				System.out.println("Trader feels sad");
+			}
+				
+			
+		}
+	}
 	public void monsterEvent(int monsterNo)
 	{
 		if(player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasMonster())
@@ -90,11 +109,16 @@ public class World {
 		
 		this.inGameLevel = new Level[30];	
 		m = new Monster[30];
+		t = new Trader[10];
 		for(int levelSet=0;levelSet!=30;levelSet++)
 		{
 			this.inGameLevel[levelSet]=new Level();
 			this.inGameLevel[levelSet].setLevel(levelSet);
 			m[levelSet] = new Monster(inGameLevel[levelSet]);
+			if(levelSet%5==0)
+			{
+				t[(levelSet/3)] = new Trader(inGameLevel[levelSet]);
+			}
 		}
 		level0:
 		{
@@ -110,6 +134,7 @@ public class World {
 		s.setSword(8, 9);
 		m[0].setMonster(5,5);
 		m[0].setAttack(99);
+		t[0].setTrader(3,4);
 		}
 		level1:
 		{
@@ -122,10 +147,16 @@ public class World {
 		this.inGameLevel[1].getInLevelLocation()[8][1].setHasUpStairs(true);
 		this.inGameLevel[1].getInLevelLocation()[1][8].setHasDownStairs(true);
 	}
+	
 	public void checkList()
 	{
 		goUpChecker();
 		goDownChecker();
+		for(int traderNo=0;traderNo!=t.length;traderNo++)
+		{
+			meetTraderEvent(traderNo);
+		}
+		
 		for(int monsterNO=0;monsterNO!=m.length;monsterNO++)
 		{
 			monsterEvent(monsterNO);

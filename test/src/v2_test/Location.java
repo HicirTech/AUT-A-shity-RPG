@@ -14,6 +14,7 @@ public class Location {
 	private boolean hasMonster;
 	private boolean hasUpStairs;
 	private boolean hasDownStairs;
+	private boolean hasTreader;
 	
 	Location()
 	{
@@ -116,6 +117,18 @@ public class Location {
 		this.hasSword = hasSword;
 	}
 
+	
+
+	public boolean isHasTreader() {
+		return hasTreader;
+	}
+
+
+
+	public void setHasTreader(boolean hasTreader) {
+		this.hasTreader = hasTreader;
+	}
+
 
 
 	public String toString()
@@ -144,6 +157,10 @@ public class Location {
 		else if(this.hasDownStairs)
 		{
 			return "↓↓↓";
+		}
+		else if(this.hasTreader)
+		{
+			return "~$~";
 		}
 		else			
 		{

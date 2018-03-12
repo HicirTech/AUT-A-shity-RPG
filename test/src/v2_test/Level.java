@@ -79,11 +79,15 @@ public class Level {
 			}
 			else if(yAxis==5&&this.player.isHasSword())
 			{
-				returning = returning +"You are using: "+player.getCurrentSword();
+				returning = returning +"You are using: "+player.getCurrentSword()+" ¡ü¡ü¡ü:GoUp";
+			}
+			else if (yAxis==5)
+			{
+				returning = returning +"				"+"¡ü¡ü¡ü:GoUp";
 			}
 			else if(yAxis==6)
 			{
-				returning = returning + "Your ATK is: "+this.player.getAttack();
+				returning = returning + "Your ATK is: "+this.player.getAttack()+"		"+"¡ý¡ý¡ý:GoDown";;
 			}
 			returning = returning +"\n";	
 		}
