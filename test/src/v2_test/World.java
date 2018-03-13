@@ -1,11 +1,13 @@
 package v2_test;
 import java.util.*;
 public class World {
+	
 	private Player player;
 	private Monster m[];
 	private Trader t[];
 	private Level inGameLevel[];
 	private Sword s;
+	
 	World()
 	{
 		levelManager();
@@ -69,25 +71,19 @@ public class World {
 			}			
 		}
 	}
-	public void goUpChecker()
+	
+	public void levelChangeChecker()
 	{
 		if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasUpStairs())
 		{
-			System.out.println(getPlayer().getCurrentLevel().getLevel());
 			getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1].setPlayer(getPlayer());
-			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1]);
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
+			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1]);
+			this.player.setCurrentX(getPlayer().getCurrentLevel().lookForLower().getxAxis());
+			this.player.setCurrentY(getPlayer().getCurrentLevel().lookForLower().getyAxis());
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentLevel().lookForLower().getxAxis()][getPlayer().getCurrentLevel().lookForLower().getyAxis()].setHasPlayer(true);
-			int x = getPlayer().getCurrentLevel().lookForLower().getxAxis();
-			int y = getPlayer().getCurrentLevel().lookForLower().getxAxis();
-			this.player.setCurrentX(x);
-			this.player.setCurrentY(y);
 		}
-		
-	}
-	public void goDownChecker()
-	{
-		if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasDownStairs())
+		else if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasDownStairs())
 		{
 			getInGameLevel()[getPlayer().getCurrentLevel().getLevel()-1].setPlayer(getPlayer());
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
@@ -98,6 +94,7 @@ public class World {
 		}
 	}
 	
+		
 	public Player getPlayer() {
 		return player;
 	}
@@ -195,8 +192,7 @@ public class World {
 	
 	public void checkList()
 	{
-		goUpChecker();
-		goDownChecker();
+		levelChangeChecker();
 		for(int traderNo=0;traderNo!=t.length;traderNo++)
 		{
 			meetTraderEvent(traderNo);
@@ -210,3 +206,32 @@ public class World {
 	}
 	
 }
+/*
+-------------------------wasted code---------------------------------
+public void goUpChecker()
+	{
+		if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasUpStairs())
+		{
+			getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1].setPlayer(getPlayer());
+			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
+			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1]);
+			this.player.setCurrentX(getPlayer().getCurrentLevel().lookForLower().getxAxis());
+			this.player.setCurrentY(getPlayer().getCurrentLevel().lookForLower().getyAxis());
+			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentLevel().lookForLower().getxAxis()][getPlayer().getCurrentLevel().lookForLower().getyAxis()].setHasPlayer(true);
+		}
+	}
+	
+	public void goDownChecker()
+	{
+		if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasDownStairs())
+		{
+			getInGameLevel()[getPlayer().getCurrentLevel().getLevel()-1].setPlayer(getPlayer());
+			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
+			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()-1]);
+			this.player.setCurrentX(getPlayer().getCurrentLevel().lookForUpper().getxAxis());
+			this.player.setCurrentY(getPlayer().getCurrentLevel().lookForUpper().getyAxis());
+			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentLevel().lookForUpper().getxAxis()][getPlayer().getCurrentLevel().lookForUpper().getyAxis()].setHasPlayer(true);
+		}
+	}
+
+*/
