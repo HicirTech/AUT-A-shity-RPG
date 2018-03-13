@@ -31,6 +31,12 @@ public class Location {
 		this.setHasPlayer(false);
 	}
 
+	public int[] getUpperLocation()
+	{
+		int[] a= {this.xAxis,this.yAxis};
+		return a;
+		
+	}
 	public int getxAxis() {
 		return xAxis;
 	}

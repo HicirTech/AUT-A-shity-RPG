@@ -73,11 +73,17 @@ public class World {
 	{
 		if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasUpStairs())
 		{
+			System.out.println(getPlayer().getCurrentLevel().getLevel());
 			getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1].setPlayer(getPlayer());
-			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
 			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1]);
-			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(true);
+			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
+			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentLevel().lookForLower().getxAxis()][getPlayer().getCurrentLevel().lookForLower().getyAxis()].setHasPlayer(true);
+			int x = getPlayer().getCurrentLevel().lookForLower().getxAxis();
+			int y = getPlayer().getCurrentLevel().lookForLower().getxAxis();
+			this.player.setCurrentX(x);
+			this.player.setCurrentY(y);
 		}
+		
 	}
 	public void goDownChecker()
 	{
@@ -86,7 +92,9 @@ public class World {
 			getInGameLevel()[getPlayer().getCurrentLevel().getLevel()-1].setPlayer(getPlayer());
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
 			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()-1]);
-			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(true);
+			this.player.setCurrentX(getPlayer().getCurrentLevel().lookForUpper().getxAxis());
+			this.player.setCurrentY(getPlayer().getCurrentLevel().lookForUpper().getyAxis());
+			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentLevel().lookForUpper().getxAxis()][getPlayer().getCurrentLevel().lookForUpper().getyAxis()].setHasPlayer(true);
 		}
 	}
 	
@@ -138,14 +146,51 @@ public class World {
 		}
 		level1:
 		{
-			for(int b = 0;b!=6;b++)
+			this.inGameLevel[1].getInLevelLocation()[0][0].setHasUpStairs(true);
+			for(int i=0;i!=10;i++)
 			{
-				this.inGameLevel[1].getInLevelLocation()[1][b].setHasWall(true);
+				this.inGameLevel[1].getInLevelLocation()[i][1].setHasWall(true);
+				if(i<3&&i!=1)
+				{
+				this.inGameLevel[1].getInLevelLocation()[i][4].setHasWall(true);
+				this.inGameLevel[1].getInLevelLocation()[i][7].setHasWall(true);
+				}
+				if(i>5)
+				{
+				this.inGameLevel[1].getInLevelLocation()[i][6].setHasWall(true);
+				}
+				if(i>5&&i!=8)
+				{
+					this.inGameLevel[1].getInLevelLocation()[i][4].setHasWall(true);
+				}
+				if(i>3&&i!=5&&i!=9)
+				{
+				this.inGameLevel[1].getInLevelLocation()[i][8].setHasWall(true);
+				}
+				
 			}
-			this.inGameLevel[1].getInLevelLocation()[7][1].setHasWall(true);
+			for(int i=2;i!=11;i++)
+			{
+				if(i>2)
+				{
+					this.inGameLevel[1].getInLevelLocation()[3][i].setHasWall(true);
+				}
+				if(i<7)
+				{
+					this.inGameLevel[1].getInLevelLocation()[9][i].setHasWall(true);
+				}
+				if(i<7&&i!=5)
+				{
+				this.inGameLevel[1].getInLevelLocation()[5][i].setHasWall(true);
+				}
+				else if (i>7)
+				{
+					this.inGameLevel[1].getInLevelLocation()[7][i].setHasWall(true);
+				}
+			}
+			this.inGameLevel[1].getInLevelLocation()[10][8].setHasWall(true);
 		}
-		this.inGameLevel[1].getInLevelLocation()[8][1].setHasUpStairs(true);
-		this.inGameLevel[1].getInLevelLocation()[1][8].setHasDownStairs(true);
+		this.inGameLevel[1].getInLevelLocation()[10][10].setHasDownStairs(true);
 	}
 	
 	public void checkList()

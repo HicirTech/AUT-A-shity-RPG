@@ -103,7 +103,7 @@ public  class Player extends Character {
 			{
 				this.getCurrentLevel().getInLevelLocation()[this.getCurrentX()][this.getCurrentY()].setHasPlayer(false);
 				this.setCurrentX(getCurrentX()+1);
-				if(this.getCurrentX()<10)
+				if(this.getCurrentX()<11)
 				{
 					if(!this.getCurrentLevel().getInLevelLocation()[this.getCurrentX()][this.getCurrentY()].isHasWall())
 					{
@@ -125,7 +125,7 @@ public  class Player extends Character {
 			{
 				this.getCurrentLevel().getInLevelLocation()[this.getCurrentX()][this.getCurrentY()].setHasPlayer(false);
 				this.setCurrentY(this.getCurrentY()+1);
-				if(this.getCurrentY()<10)
+				if(this.getCurrentY()<11)
 				{
 					if(!this.getCurrentLevel().getInLevelLocation()[this.getCurrentX()][this.getCurrentY()].isHasWall())
 					{

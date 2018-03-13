@@ -7,15 +7,47 @@ public class Level {
 	
 	Level()
 	{
-		this.inLevelLocation = new Location[10][10];
-		for(int yAxis=0;yAxis!=10;yAxis++)
+		this.inLevelLocation = new Location[11][11];
+		for(int yAxis=0;yAxis!=11;yAxis++)
 		{
-			for(int xAxis=0;xAxis!=10;xAxis++)
+			for(int xAxis=0;xAxis!=11;xAxis++)
 			{
 				this.getInLevelLocation()[xAxis][yAxis]=new Location(xAxis,yAxis);
 			}
 		}		
 	}
+	public Location lookForUpper()
+	{
+		Location tempLocation = new Location();
+		for(int xAxis=0;xAxis!=11;xAxis++)
+		{
+			for(int yAxis=0;yAxis!=11;yAxis++)
+			{
+				if(this.inLevelLocation[xAxis][yAxis].isHasUpStairs())
+				{
+					tempLocation=this.inLevelLocation[xAxis][yAxis];
+				}
+			}			
+		}
+		return tempLocation;
+	}
+	
+	public Location lookForLower()
+	{
+		Location tempLocation = new Location();
+		for(int xAxis=0;xAxis!=11;xAxis++)
+		{
+			for(int yAxis=0;yAxis!=11;yAxis++)
+			{
+				if(this.inLevelLocation[xAxis][yAxis].isHasDownStairs())
+				{
+					tempLocation=this.inLevelLocation[xAxis][yAxis];
+				}
+			}			
+		}
+		return tempLocation;
+	}
+	
 
 	public void setPlayer(Player player)
 	{
@@ -43,17 +75,17 @@ public class Level {
 	
 	public String toString()
 	{
-		String returning= "¨X¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[\n";
+		String returning= "¨X¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[\n";
 		
-		for(int yAxis=0;yAxis!=10;yAxis++)
+		for(int yAxis=0;yAxis!=11;yAxis++)
 		{
-			for(int xAxis=0;xAxis!=10;xAxis++)
+			for(int xAxis=0;xAxis!=11;xAxis++)
 			{
 				if(xAxis==0)
 				{
 					returning=returning+"¨U"+this.getInLevelLocation()[xAxis][yAxis].toString();
 				}
-				else if(xAxis==9)
+				else if(xAxis==10)
 				{
 					returning=returning+this.getInLevelLocation()[xAxis][yAxis].toString()+"¨U";
 				}
@@ -92,7 +124,7 @@ public class Level {
 			returning = returning +"\n";	
 		}
 		
-		return returning+"¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨a";
+		return returning+"¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨a";
 	}
 	
 	
