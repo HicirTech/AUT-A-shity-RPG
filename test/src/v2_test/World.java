@@ -186,8 +186,74 @@ public class World {
 				}
 			}
 			this.inGameLevel[1].getInLevelLocation()[10][8].setHasWall(true);
+			this.inGameLevel[1].getInLevelLocation()[10][10].setHasDownStairs(true);
 		}
-		this.inGameLevel[1].getInLevelLocation()[10][10].setHasDownStairs(true);
+		level2:
+		{
+			this.inGameLevel[2].getInLevelLocation()[2][1].setHasWall(true);
+			this.inGameLevel[2].getInLevelLocation()[3][1].setHasWall(true);
+			this.inGameLevel[2].getInLevelLocation()[10][1].setHasWall(true);
+			this.inGameLevel[2].getInLevelLocation()[9][1].setHasWall(true);
+			this.inGameLevel[2].getInLevelLocation()[0][0].setHasDownStairs(true);
+			this.inGameLevel[2].getInLevelLocation()[0][10].setHasUpStairs(true);
+			
+			for(int i=3;i!=11;i++)
+			{
+				for(int j=0;j!=11;j++)
+				{
+				if(j!=0&&j!=6)
+				{
+					this.inGameLevel[2].getInLevelLocation()[j][2].setHasWall(true);
+				}
+				}
+				
+				this.inGameLevel[2].getInLevelLocation()[1][i].setHasWall(true);
+				
+				if(i!=4&&i!=7&&i!=10)
+				{
+				this.inGameLevel[2].getInLevelLocation()[4][i].setHasWall(true);
+				this.inGameLevel[2].getInLevelLocation()[8][i].setHasWall(true);
+				}
+				if(i!=0&&i<5)
+				{
+				this.inGameLevel[2].getInLevelLocation()[2][5].setHasWall(true);
+				this.inGameLevel[2].getInLevelLocation()[i][5].setHasWall(true);
+				this.inGameLevel[2].getInLevelLocation()[i][8].setHasWall(true);
+				this.inGameLevel[2].getInLevelLocation()[2][8].setHasWall(true);
+				}
+				if(i>7)
+				{
+				this.inGameLevel[2].getInLevelLocation()[i][5].setHasWall(true);
+				this.inGameLevel[2].getInLevelLocation()[i][8].setHasWall(true);
+				}
+			}
+		}
+		
+		level3:
+		{
+			this.inGameLevel[3].getInLevelLocation()[0][10].setHasDownStairs(true);
+			this.inGameLevel[3].getInLevelLocation()[10][10].setHasUpStairs(true);
+			for(int i=0;i!=11;i++)
+			{
+				if(i!=0&&i!=4&&i!=7&&i<10)
+					{
+					this.inGameLevel[3].getInLevelLocation()[i][3].setHasWall(true);
+					}
+				if(i!=4&&i!=10)
+				{
+					this.inGameLevel[3].getInLevelLocation()[2][i].setHasWall(true);
+					this.inGameLevel[3].getInLevelLocation()[6][i].setHasWall(true);
+					this.inGameLevel[3].getInLevelLocation()[8][i].setHasWall(true);
+					this.inGameLevel[3].getInLevelLocation()[8][1].setHasWall(false);
+					this.inGameLevel[3].getInLevelLocation()[8][7].setHasWall(false);
+					this.inGameLevel[3].getInLevelLocation()[3][10].setHasWall(true);
+					this.inGameLevel[3].getInLevelLocation()[3][10].setHasWall(true);
+					this.inGameLevel[3].getInLevelLocation()[8][10].setHasWall(false);
+				}
+			}
+			
+		}
+	
 	}
 	
 	public void checkList()
