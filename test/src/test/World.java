@@ -1,4 +1,4 @@
-package v2_test;
+package test;
 import java.util.*;
 public class World {
 	
