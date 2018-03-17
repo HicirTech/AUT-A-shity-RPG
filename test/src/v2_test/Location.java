@@ -142,19 +142,19 @@ public class Location {
 			
 		if(this.hasPlayer)
 		{
-			return "~▲~";
+			return " ▲ ";
 		}
 		else if(this.hasWall)
 		{
-			return "▄▄▄";
+			return "###";
 		}
 		else if(this.hasMonster)
 		{	
-			return "~Φ~";
+			return " * ";
 		}
 		else if(this.hasSword)
 		{
-			return "~S~";
+			return " S ";
 		}
 		else if(this.hasUpStairs)
 		{
@@ -166,11 +166,11 @@ public class Location {
 		}
 		else if(this.hasTreader)
 		{
-			return "~$~";
+			return " $ ";
 		}
 		else			
 		{
-			return "~~~";
+			return "___";
 		}
 	
 		

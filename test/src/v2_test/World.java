@@ -424,7 +424,64 @@ public class World {
 		}
 		level9:
 		{
-			
+			this.inGameLevel[9].getInLevelLocation()[5][0].setHasDownStairs(true);
+			this.inGameLevel[9].getInLevelLocation()[0][10].setHasUpStairs(true);
+			for(int i=0;i!=11;i++)
+			{
+				if(i!=0&&i!=10)
+				{
+					this.inGameLevel[9].getInLevelLocation()[i][2].setHasWall(true);
+				}
+				if(i!=0&&i<5)
+				{
+					this.inGameLevel[9].getInLevelLocation()[3][i].setHasWall(true);
+				}
+				if(i!=0&&i!=4&&i!=10)
+				{
+					this.inGameLevel[9].getInLevelLocation()[7][i].setHasWall(true);
+				}
+				if(i<6)
+				{
+					this.inGameLevel[9].getInLevelLocation()[i][5].setHasWall(true);
+				}
+				if(i>1&&i<4)
+				{
+					this.inGameLevel[9].getInLevelLocation()[i][8].setHasWall(true);
+				}
+				if(i>6&&i!=10)
+				{
+					this.inGameLevel[9].getInLevelLocation()[2][i].setHasWall(true);
+				}
+			}
+		}
+		level10:
+		{
+			this.inGameLevel[10].getInLevelLocation()[0][10].setHasDownStairs(true);
+			this.inGameLevel[10].getInLevelLocation()[5][0].setHasUpStairs(true);
+			for(int i=0;i!=11;i++)
+			{
+				if(i<4)
+				{
+					this.inGameLevel[10].getInLevelLocation()[i][1].setHasWall(true);
+					this.inGameLevel[10].getInLevelLocation()[i][4].setHasWall(true);
+				}
+				if(i>6)
+				{
+					this.inGameLevel[10].getInLevelLocation()[i][1].setHasWall(true);
+					this.inGameLevel[10].getInLevelLocation()[i][4].setHasWall(true);
+				}
+				if(i!=0&&i!=3&&i!=10)
+				{
+					this.inGameLevel[10].getInLevelLocation()[3][i].setHasWall(true);
+					this.inGameLevel[10].getInLevelLocation()[7][i].setHasWall(true);
+				}
+				if(i>7)
+				{
+					this.inGameLevel[10].getInLevelLocation()[1][i].setHasWall(true);
+					this.inGameLevel[10].getInLevelLocation()[9][i].setHasWall(true);
+				}
+				
+			}
 		}
 	}
 	
