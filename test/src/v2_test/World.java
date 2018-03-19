@@ -10,10 +10,15 @@ public class World {
 	
 	World()
 	{
-		levelManager();
+		MapManager();
+		MonsterManager();
 		this.player=new Player(this.getInGameLevel()[0]);
 		this.player.setCurrentLevel(this.inGameLevel[0]);
 		this.inGameLevel[0].setPlayer(player);
+		WorldStart();
+	}
+	public void WorldStart()
+	{
 		do{
 			try{
 			player.move(new Scanner(System.in).next().charAt(0));
@@ -26,11 +31,9 @@ public class World {
 				checkList();
 				System.out.println(this.getPlayer().getCurrentLevel());
 			}
-		}while(player.getHeath()>0);
-		
-		
+		}while(this.getPlayer().getHeath()>0);		
 	}
-	
+
 	public void swordPickUpEevent()
 	{
 		if (player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasSword())
@@ -62,8 +65,7 @@ public class World {
 		if(player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasMonster())
 		{
 			m[monsterNo].Attack(player);
-			m[monsterNo].setHeath(m[monsterNo].getHeath()-player.getAttack());
-			
+			m[monsterNo].setHeath(m[monsterNo].getHeath()-player.getAttack());	
 			if(m[monsterNo].getHeath()<=0)
 			{
 				m[monsterNo].die(player);
@@ -109,17 +111,15 @@ public class World {
 	}
 	
 	
-	public void levelManager()
+	public final void MapManager()
 	{
-		
 		this.inGameLevel = new Level[30];	
-		m = new Monster[30];
+		
 		t = new Trader[10];
 		for(int levelSet=0;levelSet!=30;levelSet++)
 		{
 			this.inGameLevel[levelSet]=new Level();
 			this.inGameLevel[levelSet].setLevel(levelSet);
-			m[levelSet] = new Monster(inGameLevel[levelSet]);
 			if(levelSet%5==0)
 			{
 				t[(levelSet/3)] = new Trader(inGameLevel[levelSet]);
@@ -135,11 +135,9 @@ public class World {
 		this.inGameLevel[0].getInLevelLocation()[7][1].setHasWall(true);
 		this.inGameLevel[0].getInLevelLocation()[8][1].setHasUpStairs(true);
 		this.inGameLevel[0].getInLevelLocation()[1][8].setHasDownStairs(true);
-		this.inGameLevel[0].getInLevelLocation()[5][5].setHasMonster(true);
-		s.setSword(8, 9);
-		m[0].setMonster(5,5);
-		m[0].setAttack(99);
+		
 		t[0].setTrader(3,4);
+		s.setSword(8, 9);
 		}
 		level1:
 		{
@@ -457,7 +455,7 @@ public class World {
 		level10:
 		{
 			this.inGameLevel[10].getInLevelLocation()[0][10].setHasDownStairs(true);
-			this.inGameLevel[10].getInLevelLocation()[5][0].setHasUpStairs(true);
+			//this.inGameLevel[10].getInLevelLocation()[5][0].setHasUpStairs(true);
 			for(int i=0;i!=11;i++)
 			{
 				if(i<4)
@@ -484,7 +482,18 @@ public class World {
 			}
 		}
 	}
-	
+	public final void MonsterManager()
+	{
+		m = new Monster[30];
+		for(int levelSet=0;levelSet!=30;levelSet++)
+		{
+			m[levelSet] = new Monster(inGameLevel[levelSet]);
+		}
+		this.inGameLevel[0].getInLevelLocation()[5][5].setHasMonster(true);	
+		m[0].setMonster(5,5);
+		m[0].setAttack(99);
+		
+	}
 	public void checkList()
 	{
 		levelChangeChecker();
@@ -500,32 +509,3 @@ public class World {
 	}
 	
 }
-/*
--------------------------wasted code---------------------------------
-public void goUpChecker()
-	{
-		if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasUpStairs())
-		{
-			getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1].setPlayer(getPlayer());
-			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
-			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()+1]);
-			this.player.setCurrentX(getPlayer().getCurrentLevel().lookForLower().getxAxis());
-			this.player.setCurrentY(getPlayer().getCurrentLevel().lookForLower().getyAxis());
-			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentLevel().lookForLower().getxAxis()][getPlayer().getCurrentLevel().lookForLower().getyAxis()].setHasPlayer(true);
-		}
-	}
-	
-	public void goDownChecker()
-	{
-		if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasDownStairs())
-		{
-			getInGameLevel()[getPlayer().getCurrentLevel().getLevel()-1].setPlayer(getPlayer());
-			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].setHasPlayer(false);
-			getPlayer().setCurrentLevel(getInGameLevel()[getPlayer().getCurrentLevel().getLevel()-1]);
-			this.player.setCurrentX(getPlayer().getCurrentLevel().lookForUpper().getxAxis());
-			this.player.setCurrentY(getPlayer().getCurrentLevel().lookForUpper().getyAxis());
-			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentLevel().lookForUpper().getxAxis()][getPlayer().getCurrentLevel().lookForUpper().getyAxis()].setHasPlayer(true);
-		}
-	}
-
-*/
