@@ -11,7 +11,6 @@ public abstract class Character {
 	Character()
 	{
 		this.setHeath(100);
-		this.setAttack(5);
 		this.setMoney(0);
 	}
 	public double getHeath() {

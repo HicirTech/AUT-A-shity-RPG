@@ -15,6 +15,7 @@ public class Location {
 	private boolean hasUpStairs;
 	private boolean hasDownStairs;
 	private boolean hasTreader;
+	private boolean hasSavePoint;
 	
 	Location()
 	{
@@ -135,6 +136,18 @@ public class Location {
 		this.hasTreader = hasTreader;
 	}
 
+	
+
+	public boolean isHasSavePoint() {
+		return hasSavePoint;
+	}
+
+
+
+	public void setHasSavePoint(boolean hasSavePoint) {
+		this.hasSavePoint = hasSavePoint;
+	}
+
 
 
 	public String toString()
@@ -142,7 +155,7 @@ public class Location {
 			
 		if(this.hasPlayer)
 		{
-			return " ▲ ";
+			return " o ";
 		}
 		else if(this.hasWall)
 		{
@@ -158,15 +171,19 @@ public class Location {
 		}
 		else if(this.hasUpStairs)
 		{
-			return "↑↑↑";	
+			return "+++";	
 		}
 		else if(this.hasDownStairs)
 		{
-			return "↓↓↓";
+			return "---";
 		}
 		else if(this.hasTreader)
 		{
 			return " $ ";
+		}
+		else if(this.hasSavePoint)
+		{
+			return " P ";
 		}
 		else			
 		{

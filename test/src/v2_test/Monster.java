@@ -2,9 +2,12 @@ package v2_test;
 
 public class Monster extends Character{
 	
-	Monster(Level thisLevel)
+	Monster(Level thisLevel,int atk, int hp)
 	{
 		this.setCurrentLevel(thisLevel);
+		this.setAttack(atk);
+		this.setHeath(hp);
+		
 	}
 	
 	
@@ -14,6 +17,7 @@ public class Monster extends Character{
 		player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].setHasPlayer(false);
 		player.setCurrentX(player.getCurrentX()-(int)(Math.random()*1.1+0.5));
 		player.setCurrentY(player.getCurrentY()-(int)(Math.random()*1.1+0.5));
+		
 		player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].setHasPlayer(true);
 		System.out.println(String.format("Monster attacked you!!!\nYou lost %d heath",(int)this.getAttack()));
 	}

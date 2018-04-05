@@ -7,6 +7,6 @@ public class Sword_Napoleon extends Sword{
 	{
 		super(currentLevel);
 		super.setSwordName("Napoleon¡¯s Sword");
-		this.setAtkBoot(20);
+		this.setAtkBoot(4);
 	}
 }

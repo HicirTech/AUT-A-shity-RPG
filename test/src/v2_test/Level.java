@@ -75,19 +75,19 @@ public class Level {
 	
 	public String toString()
 	{
-		String returning= "¨X¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[\n";
-		
+	//	String returning= "¨X¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[\n";
+		String returning= "+=================================+\n";
 		for(int yAxis=0;yAxis!=11;yAxis++)
 		{
 			for(int xAxis=0;xAxis!=11;xAxis++)
 			{
 				if(xAxis==0)
 				{
-					returning=returning+"¨U"+this.getInLevelLocation()[xAxis][yAxis].toString();
+					returning=returning+"["+this.getInLevelLocation()[xAxis][yAxis].toString();
 				}
 				else if(xAxis==10)
 				{
-					returning=returning+this.getInLevelLocation()[xAxis][yAxis].toString()+"¨U";
+					returning=returning+this.getInLevelLocation()[xAxis][yAxis].toString()+"]";
 				}
 				else
 				
@@ -99,15 +99,15 @@ public class Level {
 			}
 			else if(yAxis==2)
 			{
-				returning = returning +"heath: "+player.getHeath()+"			"+"¡ø:Player";
+				returning = returning +"heath: "+player.getHeath()+"		"+"o:Player";
 			}
 			else if(yAxis==3)
 			{
-				returning = returning +"money: "+player.getMoney()+"			"+"¦µ:Monster";
+				returning = returning +"money: "+player.getMoney()+"			"+"*:Monster";
 			}
 			else if(yAxis==4)
 			{
-				returning = returning +"Your location is: Level "+player.getCurrentLevel().getLevel()+"	"+"¨{:Walls";
+				returning = returning +"Your location is: Level "+player.getCurrentLevel().getLevel()+"	"+"#:Walls";
 			}
 			else if(yAxis==5&&this.player.isHasSword())
 			{
@@ -115,16 +115,17 @@ public class Level {
 			}
 			else if (yAxis==5)
 			{
-				returning = returning +"				"+"¡ü¡ü¡ü:GoUp";
+				returning = returning +"				"+"+++:GoUp";
 			}
 			else if(yAxis==6)
 			{
-				returning = returning + "Your ATK is: "+this.player.getAttack()+"		"+"¡ý¡ý¡ý:GoDown";;
+				returning = returning + "Your ATK is: "+this.player.getAttack()+"		"+"---:GoDown";;
 			}
 			returning = returning +"\n";	
 		}
 		
-		return returning+"¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨a";
+		return returning+"+=================================+";
+	//	return returning+"¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨a";
 	}
 	
 	

@@ -1,23 +1,105 @@
 package v2_test;
 import java.util.*;
+import java.io.*;
+
 public class World {
 	
 	private Player player;
-	private Monster m[];
-	private Trader t[];
+	private Monster m[] = new Monster[30];
 	private Level inGameLevel[];
 	private Sword s;
-	
-	World()
+	private PrintWriter playersaver;
+	private Scanner  stairUp;
+	private	Scanner stairDown;
+	private Scanner monster;
+	private Scanner map;
+	private Scanner playerLoad;
+
+	World(boolean load)
 	{
+		
+		if(load==false)
+		{
+			try
+			{
+			map = new Scanner (new File("map.txt"));
+			monster=new Scanner(new File("monster.txt"));
+			stairUp= new Scanner (new File("stairUp.txt"));
+			stairDown= new Scanner (new File("stairDown.txt"));
+			}
+			catch (FileNotFoundException e) {System.out.println("File error, please check your game files");}
+			
 		MapManager();
 		MonsterManager();
 		this.player=new Player(this.getInGameLevel()[0]);
 		this.player.setCurrentLevel(this.inGameLevel[0]);
 		this.inGameLevel[0].setPlayer(player);
+		this.SwordManager();
 		WorldStart();
-	}
-	public void WorldStart()
+		}
+	
+		else
+		{
+			
+			try
+			{
+				map = new Scanner (new File("map.txt"));
+				monster=new Scanner(new File("monster.txt"));
+				stairUp= new Scanner (new File("stairUp.txt"));
+				stairDown= new Scanner (new File("stairDown.txt"));
+				playerLoad= new Scanner (new File("player.txt"));
+				
+				
+				this.MapManager();
+				this.MonsterManager();
+				try
+				{
+				String next ;
+				next=playerLoad.nextLine();
+				this.player=new Player(this.getInGameLevel()[Integer.valueOf(next.split(",")[0])],Integer.valueOf(next.split(",")[1]),
+				Integer.valueOf(next.split(",")[2]),Integer.valueOf(next.split(",")[3]),Integer.valueOf(next.split(",")[4]),Integer.valueOf(next.split(",")[5]));
+				this.inGameLevel[Integer.valueOf(next.split(",")[0])].setPlayer(player);
+				playerLoad.close();
+				}
+				catch(NoSuchElementException e)
+				{
+					System.out.println("Gamer Save not error! Setting up new game");
+					this.player=new Player(this.getInGameLevel()[0]);
+					this.player.setCurrentLevel(this.inGameLevel[0]);
+					this.inGameLevel[0].setPlayer(player);
+				}
+				this.SwordManager();
+				WorldStart();
+			}
+			catch (FileNotFoundException e) {
+				System.out.println("Gamer Save not found! Setting up new game");
+				try
+				{
+					//playersaver = new PrintWriter (new File("file.txt"));
+					map = new Scanner (new File("map.txt"));
+					monster=new Scanner(new File("monster.txt"));
+					stairUp= new Scanner (new File("stairUp.txt"));
+					stairDown= new Scanner (new File("stairDown.txt"));
+				}
+				catch (FileNotFoundException a) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				MapManager();
+				MonsterManager();
+				this.player=new Player(this.getInGameLevel()[0]);
+				this.player.setCurrentLevel(this.inGameLevel[0]);
+				this.inGameLevel[0].setPlayer(player);
+				WorldStart();
+			
+				
+			}}
+		
+		}
+	
+
+	
+	private void WorldStart()
 	{
 		do{
 			try{
@@ -32,49 +114,71 @@ public class World {
 				System.out.println(this.getPlayer().getCurrentLevel());
 			}
 		}while(this.getPlayer().getHeath()>0);		
+		System.out.println("You died, the world is over!");
 	}
 
-	public void swordPickUpEevent()
+	private void swordPickUpEevent()
 	{
 		if (player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasSword())
 		{
 			s.pickUp(player);
 		}
 	}
-	public void meetTraderEvent(int traderNo)
+	private void savePointEevent()
 	{
-		if (player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasTreader())
+		if (player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasSavePoint())
 		{
-			System.out.println("Trader asking for 5 Golds for boot up you heath");
-			if(new Scanner(System.in).next().charAt(0)=='o')
-			{
-				t[traderNo].playerBuyHeath(player);
-				t[traderNo]=null;
-
-			}
-			else
-			{
-				System.out.println("Trader feels sad");
-			}
-				
+			try
+			{playersaver = new PrintWriter (new File("player.txt"));
+			playersaver.println(
+					this.player.getCurrentLevel().getLevel()+","+
+					this.player.getCurrentX()+","+
+					this.player.getCurrentY()+","+
+					this.player.getMoney()+","+
+					String.format("%d",this.player.getHeath())+","+
+					String.format("%d",this.player.getAttack()));
+			playersaver.flush();
+			playersaver.close();
+			}catch (FileNotFoundException e) {}
 			
 		}
 	}
-	public void monsterEvent(int monsterNo)
+	public void saveEvent()
 	{
-		if(player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasMonster())
+		try
+		{playersaver = new PrintWriter (new File("player.txt"));
+		playersaver.println(
+				this.player.getCurrentLevel().getLevel()+","+
+				this.player.getCurrentX()+","+
+				this.player.getCurrentY()+","+
+				this.player.getMoney()+","+
+				(int)this.player.getHeath()+","+
+				(int)this.player.getAttack());
+		playersaver.flush();
+		playersaver.close();
+		}catch (FileNotFoundException e) {}		
+	}
+	private void monsterEvent(int monsterNo)
+	{
+		try
+		{if(player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasMonster())
 		{
+			
 			m[monsterNo].Attack(player);
 			m[monsterNo].setHeath(m[monsterNo].getHeath()-player.getAttack());	
-			if(m[monsterNo].getHeath()<=0)
+			if(!(m[monsterNo].getHeath()>0))
 			{
 				m[monsterNo].die(player);
+				this.getInGameLevel()[player.getCurrentLevel().getLevel()].	getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].setHasMonster(false);
+				this.getInGameLevel()[player.getCurrentLevel().getLevel()].	getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].setHasPlayer(true);
 				m[monsterNo]=null;
 			}			
 		}
+		}
+		catch(NullPointerException e){}
 	}
 	
-	public void levelChangeChecker()
+	private void levelChangeChecker()
 	{
 		if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasUpStairs())
 		{
@@ -84,6 +188,8 @@ public class World {
 			this.player.setCurrentX(getPlayer().getCurrentLevel().lookForLower().getxAxis());
 			this.player.setCurrentY(getPlayer().getCurrentLevel().lookForLower().getyAxis());
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentLevel().lookForLower().getxAxis()][getPlayer().getCurrentLevel().lookForLower().getyAxis()].setHasPlayer(true);
+			this.SwordManager();
+			this.saveEvent();
 		}
 		else if(getPlayer().getCurrentLevel().getInLevelLocation()[getPlayer().getCurrentX()][getPlayer().getCurrentY()].isHasDownStairs())
 		{
@@ -93,16 +199,17 @@ public class World {
 			this.player.setCurrentX(getPlayer().getCurrentLevel().lookForUpper().getxAxis());
 			this.player.setCurrentY(getPlayer().getCurrentLevel().lookForUpper().getyAxis());
 			this.getInGameLevel()[this.getPlayer().getCurrentLevel().getLevel()].getInLevelLocation()[getPlayer().getCurrentLevel().lookForUpper().getxAxis()][getPlayer().getCurrentLevel().lookForUpper().getyAxis()].setHasPlayer(true);
+			this.SwordManager();
+			this.saveEvent();
 		}
+	
 	}
 	
 		
 	public Player getPlayer() {
 		return player;
 	}
-	public void setPlayer(Character player) {
-		player = player;
-	}
+	
 	public Level[] getInGameLevel() {
 		return inGameLevel;
 	}
@@ -111,401 +218,176 @@ public class World {
 	}
 	
 	
-	public final void MapManager()
+	private final void MapManager()
 	{
 		this.inGameLevel = new Level[30];	
 		
-		t = new Trader[10];
 		for(int levelSet=0;levelSet!=30;levelSet++)
 		{
 			this.inGameLevel[levelSet]=new Level();
 			this.inGameLevel[levelSet].setLevel(levelSet);
-			if(levelSet%5==0)
+		}		
+		String next ;
+		do
+		{
+			try
 			{
-				t[(levelSet/3)] = new Trader(inGameLevel[levelSet]);
+			next=map.nextLine();
+				if(next!=null)
+				{
+					this.inGameLevel[Integer.valueOf(next.split(",")[0])].getInLevelLocation()[Integer.valueOf(next.split(",")[1])][Integer.valueOf(next.split(",")[2])].setHasWall(true);	
+				}
+				else
+				{
+					break;
+				}
 			}
-		}
-		level0:
-		{
-			s = new Sword_Napoleon(this.inGameLevel[0]);
-		for(int b = 0;b!=6;b++)
-		{
-			this.inGameLevel[0].getInLevelLocation()[b][1].setHasWall(true);
-		}
-		this.inGameLevel[0].getInLevelLocation()[7][1].setHasWall(true);
-		this.inGameLevel[0].getInLevelLocation()[8][1].setHasUpStairs(true);
-		this.inGameLevel[0].getInLevelLocation()[1][8].setHasDownStairs(true);
+			catch(NoSuchElementException e )
+			{
+				break;
+			}
+		}while(true);
 		
-		t[0].setTrader(3,4);
-		s.setSword(8, 9);
-		}
-		level1:
-		{
-			this.inGameLevel[1].getInLevelLocation()[0][0].setHasUpStairs(true);
-			for(int i=0;i!=10;i++)
-			{
-				this.inGameLevel[1].getInLevelLocation()[i][1].setHasWall(true);
-				if(i<3&&i!=1)
-				{
-				this.inGameLevel[1].getInLevelLocation()[i][4].setHasWall(true);
-				this.inGameLevel[1].getInLevelLocation()[i][7].setHasWall(true);
-				}
-				if(i>5)
-				{
-				this.inGameLevel[1].getInLevelLocation()[i][6].setHasWall(true);
-				}
-				if(i>5&&i!=8)
-				{
-					this.inGameLevel[1].getInLevelLocation()[i][4].setHasWall(true);
-				}
-				if(i>3&&i!=5&&i!=9)
-				{
-				this.inGameLevel[1].getInLevelLocation()[i][8].setHasWall(true);
-				}
-				
-			}
-			for(int i=2;i!=11;i++)
-			{
-				if(i>2)
-				{
-					this.inGameLevel[1].getInLevelLocation()[3][i].setHasWall(true);
-				}
-				if(i<7)
-				{
-					this.inGameLevel[1].getInLevelLocation()[9][i].setHasWall(true);
-				}
-				if(i<7&&i!=5)
-				{
-				this.inGameLevel[1].getInLevelLocation()[5][i].setHasWall(true);
-				}
-				else if (i>7)
-				{
-					this.inGameLevel[1].getInLevelLocation()[7][i].setHasWall(true);
-				}
-			}
-			this.inGameLevel[1].getInLevelLocation()[10][8].setHasWall(true);
-			this.inGameLevel[1].getInLevelLocation()[10][10].setHasDownStairs(true);
-		}
-		level2:
-		{
-			this.inGameLevel[2].getInLevelLocation()[2][1].setHasWall(true);
-			this.inGameLevel[2].getInLevelLocation()[3][1].setHasWall(true);
-			this.inGameLevel[2].getInLevelLocation()[10][1].setHasWall(true);
-			this.inGameLevel[2].getInLevelLocation()[9][1].setHasWall(true);
-			this.inGameLevel[2].getInLevelLocation()[0][0].setHasDownStairs(true);
-			this.inGameLevel[2].getInLevelLocation()[0][10].setHasUpStairs(true);
-			
-			for(int i=3;i!=11;i++)
-			{
-				for(int j=0;j!=11;j++)
-				{
-				if(j!=0&&j!=6)
-				{
-					this.inGameLevel[2].getInLevelLocation()[j][2].setHasWall(true);
-				}
-				}
-				
-				this.inGameLevel[2].getInLevelLocation()[1][i].setHasWall(true);
-				
-				if(i!=4&&i!=7&&i!=10)
-				{
-				this.inGameLevel[2].getInLevelLocation()[4][i].setHasWall(true);
-				this.inGameLevel[2].getInLevelLocation()[8][i].setHasWall(true);
-				}
-				if(i!=0&&i<5)
-				{
-				this.inGameLevel[2].getInLevelLocation()[2][5].setHasWall(true);
-				this.inGameLevel[2].getInLevelLocation()[i][5].setHasWall(true);
-				this.inGameLevel[2].getInLevelLocation()[i][8].setHasWall(true);
-				this.inGameLevel[2].getInLevelLocation()[2][8].setHasWall(true);
-				}
-				if(i>7)
-				{
-				this.inGameLevel[2].getInLevelLocation()[i][5].setHasWall(true);
-				this.inGameLevel[2].getInLevelLocation()[i][8].setHasWall(true);
-				}
-			}
-		}
 		
-		level3:
+		this.upStairManager();
+		this.downStairManager();
+		this.MonsterManager();
+					
+	}
+	private final void upStairManager()
+	{
+	String next ;
+		do
 		{
-			this.inGameLevel[3].getInLevelLocation()[0][10].setHasDownStairs(true);
-			this.inGameLevel[3].getInLevelLocation()[10][10].setHasUpStairs(true);
-			for(int i=0;i!=11;i++)
+			try
 			{
-				if(i==9||i==6)
+			next=stairUp.nextLine();
+				if(next!=null)
 				{
-					this.inGameLevel[3].getInLevelLocation()[5][i].setHasWall(true);
+					this.inGameLevel[Integer.valueOf(next.split(",")[0])].getInLevelLocation()[Integer.valueOf(next.split(",")[1])][Integer.valueOf(next.split(",")[2])].setHasUpStairs(true);	
 				}
-				if(i!=0&&i!=4&&i!=7&&i<10)
-					{
-					this.inGameLevel[3].getInLevelLocation()[i][3].setHasWall(true);
-					}
-				if(i!=4&&i!=10)
+				else
 				{
-					this.inGameLevel[3].getInLevelLocation()[2][i].setHasWall(true);
-					this.inGameLevel[3].getInLevelLocation()[6][i].setHasWall(true);
-					this.inGameLevel[3].getInLevelLocation()[8][i].setHasWall(true);
-				}
-				
-				if(i==9||i==6||i==3)
-				{
-					this.inGameLevel[3].getInLevelLocation()[3][i].setHasWall(true);
+					break;
 				}
 			}
-			this.inGameLevel[3].getInLevelLocation()[8][1].setHasWall(false);
-			this.inGameLevel[3].getInLevelLocation()[8][7].setHasWall(false);
-			this.inGameLevel[3].getInLevelLocation()[9][2].setHasWall(true);
-			this.inGameLevel[3].getInLevelLocation()[10][2].setHasWall(true);
-			this.inGameLevel[3].getInLevelLocation()[9][5].setHasWall(true);
-			this.inGameLevel[3].getInLevelLocation()[10][5].setHasWall(true);
-			this.inGameLevel[3].getInLevelLocation()[9][8].setHasWall(true);
-			this.inGameLevel[3].getInLevelLocation()[10][8].setHasWall(true);
-			this.inGameLevel[3].getInLevelLocation()[9][3].setHasWall(false);
-			this.inGameLevel[3].getInLevelLocation()[6][10].setHasWall(true);
-			this.inGameLevel[3].getInLevelLocation()[0][9].setHasWall(true);
-			this.inGameLevel[3].getInLevelLocation()[1][9].setHasWall(true);
-			this.inGameLevel[3].getInLevelLocation()[1][5].setHasWall(true);
-		}
-		level4:
-		{
-			this.inGameLevel[4].getInLevelLocation()[0][10].setHasDownStairs(true);
-			this.inGameLevel[4].getInLevelLocation()[10][10].setHasUpStairs(true);
-			for(int i=0;i!=11;i++)
+			catch(NoSuchElementException e )
 			{
-				if(i>6)
-				{
-					this.inGameLevel[4].getInLevelLocation()[1][i].setHasWall(true);
-					this.inGameLevel[4].getInLevelLocation()[5][i].setHasWall(true);
-					this.inGameLevel[4].getInLevelLocation()[9][i].setHasWall(true);
-				}
-				if(i!=1&&i!=5&&i!=9)
-				{
-					this.inGameLevel[4].getInLevelLocation()[i][3].setHasWall(true);
-				}
-				if(i<3)
-				{
-					this.inGameLevel[4].getInLevelLocation()[3][i].setHasWall(true);
-					this.inGameLevel[4].getInLevelLocation()[7][i].setHasWall(true);
-				}
-				if(i!=0&&i!=3&&i!=7&&i!=10)
-				{
-					this.inGameLevel[4].getInLevelLocation()[i][7].setHasWall(true);
-				}
-				if(i>2)
-				{
-					this.inGameLevel[4].getInLevelLocation()[i][5].setHasWall(true);
-				}
+				break;
 			}
-		}
+		}while(true);
 	
-		level5:
+		
+	}
+	private  final void downStairManager()
+	{
+	String next ;
+
+		do
 		{
-				this.inGameLevel[5].getInLevelLocation()[0][0].setHasUpStairs(true);
-				this.inGameLevel[5].getInLevelLocation()[0][10].setHasDownStairs(true);
-				
-				for(int i=0;i!=11;i++)
+			try
+			{
+			next=stairDown.nextLine();
+				if(next!=null)
 				{
-					if(i!=5&&i<8)
+					this.inGameLevel[Integer.valueOf(next.split(",")[0])].getInLevelLocation()[Integer.valueOf(next.split(",")[1])][Integer.valueOf(next.split(",")[2])].setHasDownStairs(true);	
+				}
+				else
+				{
+					break;
+				}
+			}
+			catch(NoSuchElementException e )
+			{
+				break;
+			}
+		}while(true);
+	
+		
+	}
+	private final void MonsterManager()
+	{		
+		String next ;
+			do
+			{
+				try
+				{
+					next=monster.nextLine();
+					if(next!=null)
 					{
-					this.inGameLevel[5].getInLevelLocation()[i][9].setHasWall(true);
+						m[Integer.valueOf(next.split(",")[5])]= new Monster(this.getInGameLevel()[Integer.valueOf(next.split(",")[0])]
+								,Integer.valueOf(next.split(",")[3]),
+								Integer.valueOf(next.split(",")[4]));		
+						m[Integer.valueOf(next.split(",")[5])].setMonster(Integer.valueOf(next.split(",")[1]),
+								Integer.valueOf(next.split(",")[2]));
+						getInGameLevel()[Integer.valueOf(next.split(",")[0])].
+						getInLevelLocation()[Integer.valueOf(next.split(",")[1])][Integer.valueOf(next.split(",")[2])].setHasMonster(true);
 					}
-					if(i!=1&&i!=10&&i!=5)
+					else
 					{
-					this.inGameLevel[5].getInLevelLocation()[i][9].setHasWall(true);
-					}
-					if(i!=3&&i!=10&&i!=5)
-					{
-					this.inGameLevel[5].getInLevelLocation()[i][3].setHasWall(true);
-					}
-					if(i!=10&&i!=0)
-					{
-					this.inGameLevel[5].getInLevelLocation()[4][i].setHasWall(true);
-					}
-					if(i!=5)
-					{
-						this.inGameLevel[5].getInLevelLocation()[6][i].setHasWall(true);
-					}
-					if(i!=1&&i!=5&&i!=10)
-					{
-						this.inGameLevel[5].getInLevelLocation()[6][6].setHasWall(true);
+						break;
 					}
 					
 				}
-		}
-		level6:
-		{
-			this.inGameLevel[6].getInLevelLocation()[0][0].setHasDownStairs(true);
-			this.inGameLevel[6].getInLevelLocation()[10][10].setHasUpStairs(true);
-			for(int i=0;i!=11;i++)
-			{
-				if(i!=5)
+				catch(NoSuchElementException e )
 				{
-					this.inGameLevel[6].getInLevelLocation()[i][6].setHasWall(true);
+					break;
 				}
-				if(i!=0&&i!=5)
-				{
-					this.inGameLevel[6].getInLevelLocation()[i][4].setHasWall(true);
-				}
-				if(i<5)
-				{
-					this.inGameLevel[6].getInLevelLocation()[1][i].setHasWall(true);
-				}
-				if(i==6&&i==9)
-				{
-					this.inGameLevel[6].getInLevelLocation()[1][i].setHasWall(true);
-				}
-				if(i!=5&&i!=10&&i!=3)
-				{
-					this.inGameLevel[6].getInLevelLocation()[4][i].setHasWall(true);
-				}
-				if(i!=0&&i!=5&&i!=7)
-				{
-					this.inGameLevel[6].getInLevelLocation()[6][i].setHasWall(true);
-				}
-			}
-		}
-		level7:
-		{
-			this.inGameLevel[7].getInLevelLocation()[10][10].setHasDownStairs(true);
-			this.inGameLevel[7].getInLevelLocation()[0][0].setHasUpStairs(true);
-			for(int i=0;i!=11;i++)
-			{
-				if(i!=5)
-				{
-					this.inGameLevel[7].getInLevelLocation()[3][i].setHasWall(true);
-					this.inGameLevel[7].getInLevelLocation()[9][i].setHasWall(true);
-					this.inGameLevel[7].getInLevelLocation()[7][i].setHasWall(true);
-				}
-				if(i!=5&&i!=10)
-				{
-					this.inGameLevel[7].getInLevelLocation()[1][i].setHasWall(true);
-				}
-				if(i!=5&&i>2)
-				{
-					this.inGameLevel[7].getInLevelLocation()[5][i].setHasWall(true);
-				}
-			}
-		}
-		level8:
-		{
-			this.inGameLevel[8].getInLevelLocation()[0][0].setHasDownStairs(true);
-			this.inGameLevel[8].getInLevelLocation()[5][0].setHasUpStairs(true);
-			for(int i=0;i!=11;i++)
-			{
-				if(i!=0&&i!=5&&i<8)
-				{
-					this.inGameLevel[8].getInLevelLocation()[i][2].setHasWall(true);
-				}
-				if(i!=0&&i!=6&&i<8)
-				{
-					this.inGameLevel[8].getInLevelLocation()[i][4].setHasWall(true);
-				}
-				if(i!=4&&i!=6&&i!=9)
-				{
-					this.inGameLevel[8].getInLevelLocation()[i][6].setHasWall(true);
-				}
-				if(i!=0&&i!=10)
-				{
-					this.inGameLevel[8].getInLevelLocation()[i][8].setHasWall(true);
-				}
-			}
-			this.inGameLevel[8].getInLevelLocation()[1][0].setHasWall(true);
-			this.inGameLevel[8].getInLevelLocation()[1][1].setHasWall(true);
-			this.inGameLevel[8].getInLevelLocation()[1][3].setHasWall(true);
-			this.inGameLevel[8].getInLevelLocation()[1][7].setHasWall(true);
-			this.inGameLevel[8].getInLevelLocation()[1][7].setHasWall(true);
-			this.inGameLevel[8].getInLevelLocation()[8][0].setHasWall(true);
-			this.inGameLevel[8].getInLevelLocation()[8][1].setHasWall(true);
-			this.inGameLevel[8].getInLevelLocation()[8][3].setHasWall(true);
-			this.inGameLevel[8].getInLevelLocation()[8][5].setHasWall(true);
-		}
-		level9:
-		{
-			this.inGameLevel[9].getInLevelLocation()[5][0].setHasDownStairs(true);
-			this.inGameLevel[9].getInLevelLocation()[0][10].setHasUpStairs(true);
-			for(int i=0;i!=11;i++)
-			{
-				if(i!=0&&i!=10)
-				{
-					this.inGameLevel[9].getInLevelLocation()[i][2].setHasWall(true);
-				}
-				if(i!=0&&i<5)
-				{
-					this.inGameLevel[9].getInLevelLocation()[3][i].setHasWall(true);
-				}
-				if(i!=0&&i!=4&&i!=10)
-				{
-					this.inGameLevel[9].getInLevelLocation()[7][i].setHasWall(true);
-				}
-				if(i<6)
-				{
-					this.inGameLevel[9].getInLevelLocation()[i][5].setHasWall(true);
-				}
-				if(i>1&&i<4)
-				{
-					this.inGameLevel[9].getInLevelLocation()[i][8].setHasWall(true);
-				}
-				if(i>6&&i!=10)
-				{
-					this.inGameLevel[9].getInLevelLocation()[2][i].setHasWall(true);
-				}
-			}
-		}
-		level10:
-		{
-			this.inGameLevel[10].getInLevelLocation()[0][10].setHasDownStairs(true);
-			//this.inGameLevel[10].getInLevelLocation()[5][0].setHasUpStairs(true);
-			for(int i=0;i!=11;i++)
-			{
-				if(i<4)
-				{
-					this.inGameLevel[10].getInLevelLocation()[i][1].setHasWall(true);
-					this.inGameLevel[10].getInLevelLocation()[i][4].setHasWall(true);
-				}
-				if(i>6)
-				{
-					this.inGameLevel[10].getInLevelLocation()[i][1].setHasWall(true);
-					this.inGameLevel[10].getInLevelLocation()[i][4].setHasWall(true);
-				}
-				if(i!=0&&i!=3&&i!=10)
-				{
-					this.inGameLevel[10].getInLevelLocation()[3][i].setHasWall(true);
-					this.inGameLevel[10].getInLevelLocation()[7][i].setHasWall(true);
-				}
-				if(i>7)
-				{
-					this.inGameLevel[10].getInLevelLocation()[1][i].setHasWall(true);
-					this.inGameLevel[10].getInLevelLocation()[9][i].setHasWall(true);
-				}
-				
-			}
-		}
-	}
-	public final void MonsterManager()
-	{
-		m = new Monster[30];
-		for(int levelSet=0;levelSet!=30;levelSet++)
-		{
-			m[levelSet] = new Monster(inGameLevel[levelSet]);
-		}
-		this.inGameLevel[0].getInLevelLocation()[5][5].setHasMonster(true);	
-		m[0].setMonster(5,5);
-		m[0].setAttack(99);
+			}while(true);
 		
 	}
-	public void checkList()
+	private void SwordManager()
 	{
-		levelChangeChecker();
-		for(int traderNo=0;traderNo!=t.length;traderNo++)
+		s = null;
+		switch(this.getPlayer().getCurrentLevel().getLevel())
 		{
-			meetTraderEvent(traderNo);
+		case(0):
+		{
+			//this.getInGameLevel()[0].getInLevelLocation()[5][6].setHasSword(true);
+			
+			s = new Sword_old(this.player.getCurrentLevel());
+			s.setSword(5, 6);
+			break;
 		}
+		case(1):
+		{
+			
+			s = new Sword_Napoleon(this.player.getCurrentLevel());
+			s.setSword(6, 3);
+			break;
+		}
+		case(4):
+		{
+
+			s = new Sword_Master(this.player.getCurrentLevel());
+			s.setSword(8, 2);
+			break;
+		}
+		case(7):
+		{
+			s = new Sword_DS(this.player.getCurrentLevel());
+			s.setSword(5, 2);
+			break;
+		}
+		case(9):
+			s = new Sword_Programer(this.player.getCurrentLevel());
+			s.setSword(5, 7);
+			break;
+		}		
+	
+		
+	}
+	
+	
+	private void checkList()
+	{
+		this.levelChangeChecker();
+		this.savePointEevent();
 		for(int monsterNO=0;monsterNO!=m.length;monsterNO++)
 		{
-			monsterEvent(monsterNO);
+			this.monsterEvent(monsterNO);
 		}
-		swordPickUpEevent();
+		this.swordPickUpEevent();
 	}
 	
 }

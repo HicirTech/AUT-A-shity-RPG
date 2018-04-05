@@ -10,7 +10,18 @@ public  class Player extends Character {
 		super.getCurrentLevel().getInLevelLocation()[0][0].setHasPlayer(true);
 		this.setCurrentX(0);
 		this.setCurrentY(0);
-		this.attack=5;
+		this.attack=10;
+		this.setHeath(1000);
+	}
+	Player(Level currentLevel,int xAxis,int yAxis,int Money, int hp,int atk)
+	{
+		this.setCurrentLevel(currentLevel);
+		super.getCurrentLevel().getInLevelLocation()[xAxis][yAxis].setHasPlayer(true);
+		this.setCurrentX(xAxis);
+		this.setCurrentY(yAxis);
+		this.attack=atk;
+		this.setHeath(hp);
+		this.setCurrentSword(null);;
 	}
 	
 	
@@ -27,7 +38,7 @@ public  class Player extends Character {
 	public void setAttackBoot() {
 		if(this.isHasSword())
 		{
-			this.attack = 5*this.getCurrentSword().getAtkBoot();
+			this.attack = this.getCurrentSword().getAtkBoot();
 		}
 		else
 		{
