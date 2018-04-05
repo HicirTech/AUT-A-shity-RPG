@@ -1,0 +1,17 @@
+I woke up and open my eyes...
+_______________
+"Where am I...."
+_______________
+I found I has been trapped in a maze
+I cannot remember how I get to here
+"Ahhhhhhhh!!!!!"
+A loud cry came from nearby
+It is A monster "*" stand behind a wall "#"
+"Emmm, what is that shining thing?"
+I found that is a old sword "S" behind that monster
+"Maybe I can find a way out...."
+___________________introductions_____________________________
+Enter "a" "s" "d" "w" to move your character (one each time)
+o:Player (your)
+*:Monster   #:Walls
++++:Go Up   ---:Go Down

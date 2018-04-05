@@ -1,5 +1,10 @@
 package v2_test;
-
+/**
+ * a Sword called "Programer's Sword", programmer is the designer of this world
+ * it has the highest attack boot, able to kill all monster in the game by 1 hit
+ * @author Luo Zeting ID:16938158
+ *
+ */
 public class Sword_Programer extends Sword{
 	Sword_Programer(Level currentLevel)
 	{

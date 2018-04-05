@@ -1,6 +1,10 @@
 package v2_test;
-
-public class Sword_DS extends Sword{
+/**
+ * this is a nice looking sword
+ * @author Luo Zeting ID:16938158
+ *
+ */
+class Sword_DS extends Sword{
 
 	Sword_DS(Level currentLevel) {
 		super(currentLevel);
