@@ -67,13 +67,13 @@ public class Level {
 	}
 
 	public String toString() {
-		String returning = "+=================================+\n";
+                String returning = "___________________________________\n";
 		for (int yAxis = 0; yAxis != 11; yAxis++) {
 			for (int xAxis = 0; xAxis != 11; xAxis++) {
 				if (xAxis == 0) {
-					returning = returning + "[" + this.getInLevelLocation()[xAxis][yAxis].toString();
+					returning = returning + "|" + this.getInLevelLocation()[xAxis][yAxis].toString();
 				} else if (xAxis == 10) {
-					returning = returning + this.getInLevelLocation()[xAxis][yAxis].toString() + "]";
+					returning = returning + this.getInLevelLocation()[xAxis][yAxis].toString() + "|";
 				} else
 
 					returning = returning + "" + this.getInLevelLocation()[xAxis][yAxis].toString();
@@ -88,7 +88,7 @@ public class Level {
 				returning = returning + "Your location is: Level " + player.getCurrentLevel().getLevel() + "	"
 						+ "#:Walls";
 			} else if (yAxis == 5 && this.player.isHasSword()) {
-				returning = returning + "You are using: " + player.getCurrentSword() + " ¡ü¡ü¡ü:GoUp";
+				returning = returning + "You are using: " + player.getCurrentSword() + " +++:GoUp";
 			} else if (yAxis == 5) {
 				returning = returning + "				" + "+++:GoUp";
 			} else if (yAxis == 6) {
@@ -98,7 +98,7 @@ public class Level {
 			returning = returning + "\n";
 		}
 
-		return returning + "+=================================+";
+		return returning ;
 	}
 
 }

@@ -23,7 +23,7 @@ public class World {
 	private Scanner map;
 	private Scanner playerLoad;
 	private Scanner story;
-
+        private Scanner end;
 	World(boolean load) {// load from file or not
 
 		if (load == false) {// if not load from file then start a new game
@@ -33,18 +33,18 @@ public class World {
 				stairUp = new Scanner(new File("stairUp.txt"));
 				stairDown = new Scanner(new File("stairDown.txt"));
 				story = new Scanner(new File("story.txt"));
+                                end=new Scanner(new File("end.txt"));
 				storyReader();
 			} catch (FileNotFoundException e) {// map set up file is not found
 				System.out.println("File error, please check your game files");
 			}
 
-			MapManager();
-			MonsterManager();
+			this.MapManager();
 			this.player = new Player(this.getInGameLevel()[0]);
 			this.player.setCurrentLevel(this.inGameLevel[0]);
 			this.inGameLevel[0].setPlayer(player);
 			this.SwordManager();
-			WorldStart();
+			this.WorldStart();
 		}
 
 		else {
@@ -55,9 +55,8 @@ public class World {
 				stairUp = new Scanner(new File("stairUp.txt"));
 				stairDown = new Scanner(new File("stairDown.txt"));
 				playerLoad = new Scanner(new File("player.txt"));
-				
+				end=new Scanner(new File("end.txt"));
 				this.MapManager();
-				this.MonsterManager();
 				try {
 					String next;
 					next = playerLoad.nextLine();
@@ -74,7 +73,7 @@ public class World {
 					this.inGameLevel[0].setPlayer(player);
 				}
 				this.SwordManager();
-				WorldStart();
+				this.WorldStart();
 			} catch (FileNotFoundException e) {
 				System.out.println("Gamer Save not found! Setting up new game");
 				try {
@@ -83,22 +82,24 @@ public class World {
 					stairUp = new Scanner(new File("stairUp.txt"));
 					stairDown = new Scanner(new File("stairDown.txt"));
 					story = new Scanner(new File("story.txt"));
+                                        end=new Scanner(new File("end.txt"));
 					storyReader();
 				} catch (FileNotFoundException a) {
 					System.out.println("File error, please check your game files");
 				}
-				MapManager();
-				MonsterManager();
+				this.MapManager();
 				this.player = new Player(this.getInGameLevel()[0]);
 				this.player.setCurrentLevel(this.inGameLevel[0]);
 				this.inGameLevel[0].setPlayer(player);
-				WorldStart();
+				this.WorldStart();
 
 			}
 		}
 
 	}
-	
+	/**
+         * read story at begin
+         */
 	private void storyReader()
 	{
 		String next = null;
@@ -112,6 +113,33 @@ public class World {
 			} catch (InterruptedException e) {}
 		} while (next!=null);
 	}
+        
+        /**
+         * end story reading story
+         */
+        private void endReader()
+	{
+		String next = null;
+		do {
+			try {
+				next = end.nextLine();
+				System.out.println(next);
+				Thread.sleep(1000);
+			} catch (NoSuchElementException e) {
+				break;
+			} catch (InterruptedException e) {}
+		} while (next!=null);
+	}
+        private void endGamechecker()
+        {
+            if(player.isHasSword())
+            {
+            if(player.getCurrentSword().getSwordName().toLowerCase().contains("programer"))
+            {
+                this.endReader();
+            }
+            }
+        }
 
 	/**
 	 * this method will keep runing the world until player die
@@ -123,7 +151,7 @@ public class World {
 				player.move(new Scanner(System.in).next().charAt(0));
 				checkList();
 				System.out.println(this.getPlayer().getCurrentLevel());
-			} catch (NullPointerException e) {
+			} catch (NullPointerException e) {//next step
 				player.move(new Scanner(System.in).next().charAt(0));
 				checkList();
 				System.out.println(this.getPlayer().getCurrentLevel());
@@ -138,6 +166,7 @@ public class World {
 	private void swordPickUpEevent() {
 		if (player.getCurrentLevel().getInLevelLocation()[player.getCurrentX()][player.getCurrentY()].isHasSword()) {
 			s.pickUp(player);
+                        player.setHasSword(true);
 		}
 	}
 
@@ -157,6 +186,7 @@ public class World {
 				playersaver.flush();
 				playersaver.close();
 			} catch (FileNotFoundException e) {
+                             System.out.println("New game save created");
 			}
 		}
 	}
@@ -174,6 +204,7 @@ public class World {
 			playersaver.flush();
 			playersaver.close();
 		} catch (FileNotFoundException e) {
+                    System.out.println("New game save created");
 		}
 	}
 
@@ -201,6 +232,7 @@ public class World {
 				}
 			}
 		} catch (NullPointerException e) {
+                    System.out.println("catch:Null catch");
 		}
 	}
 
@@ -350,30 +382,30 @@ public class World {
 		s = null;
 		switch (this.getPlayer().getCurrentLevel().getLevel()) {
 		case (0): {
-			s = new Sword_old(this.player.getCurrentLevel());
+			s = new swordOld(this.player.getCurrentLevel());
 			s.setSword(5, 6);
 			break;
 		}
 		case (1): {
 
-			s = new Sword_Napoleon(this.player.getCurrentLevel());
+			s = new swordNapoleon(this.player.getCurrentLevel());
 			s.setSword(6, 3);
 			break;
 		}
 		case (4): {
 
-			s = new Sword_DS(this.player.getCurrentLevel());
+			s = new swordDS(this.player.getCurrentLevel());
 
 			s.setSword(8, 2);
 			break;
 		}
 		case (7): {
-			s = new Sword_Master(this.player.getCurrentLevel());
+			s = new swordMaster(this.player.getCurrentLevel());
 			s.setSword(5, 2);
 			break;
 		}
 		case (9):
-			s = new Sword_Programer(this.player.getCurrentLevel());
+			s = new swordProgramer(this.player.getCurrentLevel());
 			s.setSword(5, 7);
 			break;
 		}
@@ -391,6 +423,7 @@ public class World {
 			this.monsterEvent(monsterNO);
 		}
 		this.swordPickUpEevent();
+                this.endGamechecker();
 	}
 
 	public Player getPlayer() {

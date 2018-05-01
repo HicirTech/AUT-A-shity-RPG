@@ -15,3 +15,7 @@ Enter "a" "s" "d" "w" to move your character (one each time)
 o:Player (your)
 *:Monster   #:Walls
 +++:Go Up   ---:Go Down
+Go get the greatest sword to pass the game
+Player "o" can not cross "#"
+Monster "*" will hit and push player "o" to a nearby location
+Every time you go up or down stair game will AUTO SAVE

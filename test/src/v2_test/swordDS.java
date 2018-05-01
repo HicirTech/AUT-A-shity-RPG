@@ -4,9 +4,9 @@ package v2_test;
  * @author Luo Zeting ID:16938158
  *
  */
-class Sword_DS extends Sword{
+class swordDS extends Sword{
 
-	Sword_DS(Level currentLevel) {
+	swordDS(Level currentLevel) {
 		super(currentLevel);
 		super.setSwordName("Sword-Duluxe");
 		this.setAtkBoot(40000);

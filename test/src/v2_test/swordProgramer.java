@@ -5,8 +5,8 @@ package v2_test;
  * @author Luo Zeting ID:16938158
  *
  */
-public class Sword_Programer extends Sword{
-	Sword_Programer(Level currentLevel)
+public class swordProgramer extends Sword{
+	swordProgramer(Level currentLevel)
 	{
 		super(currentLevel);
 		super.setSwordName("Programer's Sword");

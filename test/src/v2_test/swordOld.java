@@ -4,8 +4,8 @@ package v2_test;
  * @author Luo Zeting ID:16938158
  *
  */
-public class Sword_old extends Sword {
-	Sword_old(Level currentLevel)
+public class swordOld extends Sword {
+	swordOld(Level currentLevel)
 	{
 		super(currentLevel);
 		super.setSwordName("Old Sword");
