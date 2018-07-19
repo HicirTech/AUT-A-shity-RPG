@@ -7,7 +7,9 @@ package Testing;
  */
 
 import java.sql.SQLException;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+
 import v2_test.DatabaseControl;
 import v2_test.EndGameFrame;
 import v2_test.GameFrame;
