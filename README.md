@@ -1,2 +1,2 @@
-# learningGit
-this is a School assignment project. I beg you do NOT download or edit (or even read) without premition!
+# Leon Branch
+Use for leon to learn Java and finish his p3 project
