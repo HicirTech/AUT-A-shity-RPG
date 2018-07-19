@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Mon Jun 04 16:59:05 NZST 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0163-c929-bd35-00000e7402d8 
-on database directory C:\Users\wws6045\Desktop\p21_16938158_16925119\PDC_S2_V1.1\RPGAME with class loader sun.misc.Launcher$AppClassLoader@63947c6b 
-Loaded from file:/C:/Users/wws6045/Desktop/p21_16938158_16925119/PDC_S2_V1.1/JDBC/derby.jar
+Thu Jul 19 13:08:23 NZST 2018:
+正在使用类加载程序 sun.misc.Launcher$AppClassLoader@2a139a55 引导数据库
+目录 C:\Users\leon\Documents\GitHub\learningGit\Leon-Dep\RPGAME 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579) 实例 a816c00e-0164-b014-b062-00000439aad0
+已从 file:/C:/Users/leon/Documents/GitHub/learningGit/Leon-Dep/JDBC/derby.jar 加载
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_152-b16
-user.dir=C:\Users\wws6045\Desktop\p21_16938158_16925119\PDC_S2_V1.1
+java.runtime.version=1.8.0_171-b11
+user.dir=C:\Users\leon\Documents\GitHub\learningGit\Leon-Dep
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
 derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
+数据库类加载程序已启动 - derby.database.classpath=''
