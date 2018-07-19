@@ -1,5 +1,4 @@
 package v2_test;
-
 /**
  * a abstract Character, now in game have monster, player
  * 
