@@ -1,0 +1,11 @@
+Enter a s d w to move 
+
+you cannot go pass
+a wall
+monster can hit 
+you and push you to a
+near by location
+
+Find the last 
+sword to pass the game  
+
