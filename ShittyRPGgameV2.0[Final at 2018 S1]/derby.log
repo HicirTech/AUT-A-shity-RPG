@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Mon Jun 04 16:59:05 NZST 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0163-c929-bd35-00000e7402d8 
-on database directory C:\Users\wws6045\Desktop\p21_16938158_16925119\PDC_S2_V1.1\RPGAME with class loader sun.misc.Launcher$AppClassLoader@63947c6b 
-Loaded from file:/C:/Users/wws6045/Desktop/p21_16938158_16925119/PDC_S2_V1.1/JDBC/derby.jar
+Thu Jul 19 16:34:01 NZST 2018:
+正在使用类加载程序 sun.misc.Launcher$AppClassLoader@2a139a55 引导数据库
+目录 C:\Users\luoze\Documents\GitHub\AUT-AshityRPG\ShittyRPGgameV2.0[Final at 2018 S1]\RPGAME 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579) 实例 a816c00e-0164-b0d0-f4ab-0000039130f0
+已从 file:/C:/Users/luoze/Documents/GitHub/AUT-AshityRPG/ShittyRPGgameV2.0%5bFinal%20at%202018%20S1%5d/JDBC/derby.jar 加载
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_152-b16
-user.dir=C:\Users\wws6045\Desktop\p21_16938158_16925119\PDC_S2_V1.1
+java.runtime.version=1.8.0_181-b13
+user.dir=C:\Users\luoze\Documents\GitHub\AUT-AshityRPG\ShittyRPGgameV2.0[Final at 2018 S1]
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
 derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
+数据库类加载程序已启动 - derby.database.classpath=''
