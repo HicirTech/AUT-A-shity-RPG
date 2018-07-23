@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Thu Jul 19 16:34:01 NZST 2018:
+Mon Jul 23 20:39:50 NZST 2018:
 正在使用类加载程序 sun.misc.Launcher$AppClassLoader@2a139a55 引导数据库
-目录 C:\Users\luoze\Documents\GitHub\AUT-AshityRPG\ShittyRPGgameV2.0[Final at 2018 S1]\RPGAME 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579) 实例 a816c00e-0164-b0d0-f4ab-0000039130f0
-已从 file:/C:/Users/luoze/Documents/GitHub/AUT-AshityRPG/ShittyRPGgameV2.0%5bFinal%20at%202018%20S1%5d/JDBC/derby.jar 加载
+目录 C:\Users\User\Documents\GitHub\AUT-AshityRPG\RPGAME 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579) 实例 a816c00e-0164-c64b-7174-0000048e4790
+已从 file:/C:/Users/User/Documents/GitHub/AUT-AshityRPG/JDBC/derby.jar 加载
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_181-b13
-user.dir=C:\Users\luoze\Documents\GitHub\AUT-AshityRPG\ShittyRPGgameV2.0[Final at 2018 S1]
+java.runtime.version=1.8.0_171-b11
+user.dir=C:\Users\User\Documents\GitHub\AUT-AshityRPG
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
